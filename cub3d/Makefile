@@ -1,32 +1,41 @@
-NAME	= cub3d
+NAME		= cub3d
 
-CC		= gcc
+CC			= gcc
 
-HEADER	= cub3d.h
+HEADER		= cub3d.h
 
-SRC		=	parser.c error.c \
-			parser_resolution.c parser_texture.c parser_color.c parser_map.c \
-			ft_cub3d_utils.c main.c \
+PARSERDIR	= parser/
 
-OBJS	= ${SRC:.c=.o}
+SRC			=	main.c error.c ft_cub3d_utils.c \
+				$(PARSERDIR)parser_color.c $(PARSERDIR)parser_map.c \
+				$(PARSERDIR)parser_resolution.c $(PARSERDIR)parser_texture.c \
+				$(PARSERDIR)parser.c \
+				
 
-CFLAGS	= -Wall -Wextra -Werror
+OBJS		= ${SRC:.c=.o}
 
-MLXFLAGS = libmlx.dylib -framework OpenGL -framework AppKit
+CFLAGS		= -Wall -Wextra -Werror
 
-LIB		= libft.a
+MLXFLAGS	= libmlx.dylib -framework OpenGL -framework AppKit
+
+LIB			= libft.a
+
+LIBFTDIR	= libft/
 
 $(NAME): 
-	make -C liba
+	make -C libft
 	${CC} ${MLXFLAGS} ${SRC} libft.a
 
 all: $(NAME)
 
 clean:
-	rm -f ${OBJS}
+	make clean -C $(LIBFTDIR)
+	rm -rf $(OBJ)
 
 fclean: clean
-	rm -rf ${NAME}
+	make fclean -C $(LIBFTDIR)
+	rm -rf $(NAME)
+	
 re: fclean all
 
 .PHONY:clean fclean

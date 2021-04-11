@@ -6,7 +6,7 @@
 /*   By: bzelda <bzelda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 05:07:39 by bzelda            #+#    #+#             */
-/*   Updated: 2021/03/22 17:41:46 by bzelda           ###   ########.fr       */
+/*   Updated: 2021/03/17 16:43:29 by bzelda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include "liba/libft.h"
+# include "libft/libft.h"
 # include "mlx.h"
+# include "vector/vector_dou.h"
+# include "vector/vector_int.h"
+
 # define RESOL_WIDTH_MAX 1000000
 # define RESOL_HEIGTH_MAX 500000
 
@@ -48,119 +51,74 @@
 
 # define A 0
 
-typedef struct	  s_data {
-    char      	  *addr;
-    int      	  bits_per_pixel;
-    int       	  line_length;
-    int       	  endian;
-}             	  t_data;
+typedef struct s_data{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}t_data;
 
-typedef struct		s_resol
+typedef struct s_resolution
 {
-	int				width;
-	int				heigth;
-}					t_resol;
+	int			width;
+	int			heigth;
+}t_resolution;
 
-typedef	struct		s_texture_info
+typedef	struct	s_texture
 {
-	char			*north_path;
-	char			*south_path;
-	char			*west_path;
-	char			*east_path;
-	char			*sprite_path;
-}					t_texture_info;
+	char		*north_path;
+	char		*south_path;
+	char		*west_path;
+	char		*east_path;
+	char		*sprite_path;
+}				t_texture;
 
-typedef	struct		s_color
+typedef	struct	s_color
 {
-	int				red;
-	int				blue;
-	int				green;
+	int			red;
+	int			blue;
+	int			green;
 
-}					t_color;
+}				t_color;
 
-typedef struct		s_player
+typedef struct	s_player
 {
-	int				side;
-	int				hit;
-	int				map_x;
-	int				map_y;
-	double			pos_x;
-	double			pos_y;
-	double			camera;
-	double			move_speed;
-	double			rot_speed;
-	double			dir_x;
-	double			dir_y;
-	double			plane_x;
-	double			plane_y;
-	double			side_dist_x;
-	double			side_dist_y;
-	double			delta_x;
-	double			delta_y;
-}					t_player;
+	double		move_speed;
+	double		rot_speed;
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+}				t_player;
 
-typedef struct		s_ray
+typedef struct s_map
 {
-	double			perp_for_wall;
-	float			ray_dir_x_0;
-	float			ray_dir_x_1;
-	float			ray_dir_y_0;
-	float			ray_dir_y_1;
-	float			cur_pos_y;
-	float			pos_z;
-	float			row_distance;
-	float			floor_step_x;
-	float			floor_step_y;
-	float			step_x;
-	float			step_y;
-	float			floor_x;
-	float			floor_y;
-}					t_ray;
+	char	**map;
+	int		count;
+	int		max;
+}t_map;
 
-typedef struct		s_key
+typedef	struct s_info
 {
-	int				w;
-	int				a;
-	int				s;
-	int				d;	
-}					t_key;
-
-typedef struct		s_img
-{
-	void			*img;
-	int				*data;
-	int				size_l;
-	int				bpp;
-	int				endian;
-	int				img_width;
-	int				img_heigth;
-}					t_img;
-
-
-
-typedef struct		s_info
-{
-	t_resol			resol;
-	t_texture_info	texture_info;
+	t_resolution	resol;
+	t_texture		texture;
 	t_color			f_color;
 	t_color			c_color;
 	t_player		player;
 	t_data			data;
-	t_img			img;
-	t_ray			ray;
-	t_key			key;
-	char			**map;
+	t_map			map;
 	void			*mlx;
 	void			*win;
-	int				**buf; // для текстур временно
-	int				**texture;
-}					t_info;
+}t_info;
 
-void	parser_resolution(char *line, t_resol *resol);
-void	parser_texture(char *line, t_texture_info *texture_info);
+void	parser_resolution(char *line, t_resolution *resol);
+void	parser_texture(char *line, t_texture *texture);
 void	parser_color(char *line, t_info *info);
-
 int		parser(t_info *info);
+
 void	ft_wich_error(int error);
 void	ft_print_error(char *text);
 void	check_press(int key, t_info *info);

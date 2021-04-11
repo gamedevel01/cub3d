@@ -6,7 +6,7 @@
 /*   By: bzelda <bzelda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 12:19:52 by bzelda            #+#    #+#             */
-/*   Updated: 2021/03/19 19:19:25 by bzelda           ###   ########.fr       */
+/*   Updated: 2021/02/11 06:55:47 by bzelda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	set_info(t_info *info)
 	info->f_color.blue = 0;
 	info->resol.heigth = 0;
 	info->resol.width = 0;
-	info->texture_info.east_path = NULL;
-	info->texture_info.north_path = NULL;
-	info->texture_info.south_path = NULL;
-	info->texture_info.sprite_path = NULL;
-	info->texture_info.west_path = NULL;
+	info->texture.east_path = NULL;
+	info->texture.north_path = NULL;
+	info->texture.south_path = NULL;
+	info->texture.sprite_path = NULL;
+	info->texture.west_path = NULL;
 }
